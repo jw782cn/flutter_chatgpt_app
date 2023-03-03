@@ -44,4 +44,4 @@ app.*.map.json
 /android/app/release
 
 
-/openai_api_key.txt
+/lib/secret.dart

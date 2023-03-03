@@ -1,5 +1,4 @@
 import 'dart:convert';
-import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -8,6 +7,7 @@ import 'package:provider/provider.dart';
 
 import 'models.dart';
 import 'conversation_provider.dart';
+import 'secret.dart';
 
 class ChatPage extends StatefulWidget {
   const ChatPage({super.key});
@@ -57,23 +57,18 @@ class _ChatPageState extends State<ChatPage> {
     });
   }
 
-  Future<Message?> _sendMessage() async {
+  Future<Message?> _sendMessage(List<Map<String, String>> messages) async {
     final url = Uri.parse('https://api.openai.com/v1/chat/completions');
-
-    // Read API key from local text file
-    final apiKeyFile = File('openai_api_key.txt');
-    final apiKey = await apiKeyFile.readAsString();
 
     final headers = {
       'Content-Type': 'application/json',
-      'Authorization': 'Bearer $apiKey',
+      'Authorization': 'Bearer $openaiApiKey',
     };
 
     // send all current conversation to OpenAI
     final body = {
       'model': _model,
-      'messages': Provider.of<ConversationProvider>(context, listen: false)
-          .currentConversationMessages,
+      'messages': messages,
     };
     final response =
         await _client.post(url, headers: headers, body: json.encode(body));
@@ -112,7 +107,7 @@ class _ChatPageState extends State<ChatPage> {
         // add to current conversation
         Provider.of<ConversationProvider>(context, listen: false).addMessage(userMessage);
       });
-      final assistantMessage = await _sendMessage();
+      final assistantMessage = await _sendMessage(Provider.of<ConversationProvider>(context, listen: false).currentConversationMessages);
       if (assistantMessage != null) {
         setState(() {
           Provider.of<ConversationProvider>(context, listen: false).addMessage(assistantMessage);

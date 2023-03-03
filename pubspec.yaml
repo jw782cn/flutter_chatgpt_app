@@ -67,7 +67,6 @@ flutter:
     - resources/avatars/ChatGPT.svg
     - resources/avatars/ChatGPT_logo.png
     - resources/avatars/person.png
-    - openai_api_key.txt
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware
