@@ -52,8 +52,12 @@ class ConversationProvider extends ChangeNotifier {
   }
   
   // add a new empty conversation
-  void addEmptyConversation() {
-    _conversations.add(Conversation(messages: [], title: 'new conversation'));
+  // default title is 'new conversation ${_conversations.length}'
+  void addEmptyConversation(String title) {
+    if (title == '') {
+      title = 'new conversation ${_conversations.length}';
+    }
+    _conversations.add(Conversation(messages: [], title: title));
     _currentConversationIndex = _conversations.length - 1;
     notifyListeners();
   }
@@ -65,10 +69,17 @@ class ConversationProvider extends ChangeNotifier {
     notifyListeners();
   }
 
+  // remove conversation by index
+  void removeConversation(int index) {
+    _conversations.removeAt(index);
+    _currentConversationIndex = _conversations.length - 1;
+    notifyListeners();
+  }
+
   // clear all conversations
   void clearConversations() {
     _conversations.clear();
-    addEmptyConversation();
+    addEmptyConversation('');
     notifyListeners();
   }
 
