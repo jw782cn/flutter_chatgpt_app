@@ -68,6 +68,11 @@ flutter:
     - resources/avatars/ChatGPT_logo.png
     - resources/avatars/person.png
 
+  fonts:
+  - family: din-regular
+    fonts:
+      - asset: resources/fonts/din-regular.ttf
+
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware
 

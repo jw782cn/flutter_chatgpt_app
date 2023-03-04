@@ -3,7 +3,7 @@
 // conversations include multiple messages
 class Conversation {
   final List<Message> messages;
-  final String title;
+  String title;
 
   Conversation({required this.messages, required this.title});
 }

@@ -8,7 +8,8 @@ class ConversationProvider extends ChangeNotifier {
 
   List<Conversation> get conversations => _conversations;
   int get currentConversationIndex => _currentConversationIndex;
-  int get ConversationCount => _conversations.length;
+  String get currentConversationTitle =>
+      _conversations[_currentConversationIndex].title;
   int get currentConversationLength =>
       _conversations[_currentConversationIndex].messages.length;
   Conversation get currentConversation => _conversations[_currentConversationIndex];
@@ -73,6 +74,26 @@ class ConversationProvider extends ChangeNotifier {
   void removeConversation(int index) {
     _conversations.removeAt(index);
     _currentConversationIndex = _conversations.length - 1;
+    notifyListeners();
+  }
+
+  // remove current conversation
+  void removeCurrentConversation() {
+    _conversations.removeAt(_currentConversationIndex);
+    _currentConversationIndex = _conversations.length - 1;
+    if (_conversations.isEmpty) {
+      addEmptyConversation('');
+    }
+    notifyListeners();
+  }
+
+  //rename conversation
+  void renameConversation(String title) {
+    if (title == ""){
+      // no title, use default title
+      title = 'new conversation ${_currentConversationIndex}';
+    }
+    _conversations[_currentConversationIndex].title = title;
     notifyListeners();
   }
 
