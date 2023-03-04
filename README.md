@@ -2,7 +2,9 @@
 
 Created by Chenran(cn257@cornell.edu)
 
-This is a simple version of chatgpt in flutter, using your own API key. With this app, you can chat in app with chatgpt. I never learned flutter before, but with ChatGPT, I created this simple version in 2 days!
+This is a simple version of chatgpt in flutter, using your own API key. With this app, you can chat in app with chatgpt. I never learned flutter before, but with ChatGPT, I created this simple version in 2 days! You can build this too!
+
+There may be some bugs though, bare with me.
 
 
 |  |  |  |
@@ -19,6 +21,7 @@ An API key for the OpenAI ChatGPT language model. You can apply for an API key h
 ### Installation
 Clone the repository to your local machine.
 Run the app on your device or emulator using flutter run.
+You will also need the Xcode to simulate the ios environment.
 
 '''
 flutter run
