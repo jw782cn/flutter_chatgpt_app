@@ -1,16 +1,42 @@
-# flutter_chat
+# Simple Flutter Version ChatGPT 
 
-A new Flutter project.
+Created by Chenran(cn257@cornell.edu)
+
+This is a simple version of chatgpt in flutter, using your own API key. With this app, you can chat in app with chatgpt. I never learned flutter before, but with ChatGPT, I created this simple version in 2 days!
+
+
+|  |  |  |
+| - | - | - |
+| ![img](images/screen1.png) | ![img](images/screen2.png) | ![img](images/screen3.png) |
+
 
 ## Getting Started
+### Prerequisites
+Before you start, make sure you have the following:
 
-This project is a starting point for a Flutter application.
+Flutter installed on your machine. You can follow the instructions here.
+An API key for the OpenAI ChatGPT language model. You can apply for an API key here.
+### Installation
+Clone the repository to your local machine.
+Run the app on your device or emulator using flutter run.
 
-A few resources to get you started if this is your first Flutter project:
+'''
+flutter run
+'''
 
-- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
+## Features
+The app includes the following features:
 
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+- Chat with ChatGPT using the OpenAI API
+- Display chat history
+- Add new conversations
+- Rename existing conversations
+- Delete conversations
+
+
+## Acknowledgments
+The OpenAI API for providing the language model used in the app.
+The Flutter framework for making it easy to build beautiful and fast mobile apps.
+
+## License
+You can use this project for your own further development! Happy Chatting!
