@@ -5,6 +5,7 @@ import 'models.dart';
 class ConversationProvider extends ChangeNotifier {
   List<Conversation> _conversations = [];
   int _currentConversationIndex = 0;
+  String apikey = "YOUR_API_KEY";
 
   List<Conversation> get conversations => _conversations;
   int get currentConversationIndex => _currentConversationIndex;
@@ -12,6 +13,7 @@ class ConversationProvider extends ChangeNotifier {
       _conversations[_currentConversationIndex].title;
   int get currentConversationLength =>
       _conversations[_currentConversationIndex].messages.length;
+  String get yourapikey => apikey;
   Conversation get currentConversation => _conversations[_currentConversationIndex];
   // get current conversation's messages format
   //'messages': [
@@ -43,6 +45,12 @@ class ConversationProvider extends ChangeNotifier {
   // change current conversation
   set currentConversationIndex(int value) {
     _currentConversationIndex = value;
+    notifyListeners();
+  }
+
+  // change api key
+  set yourapikey(String value) {
+    apikey = value;
     notifyListeners();
   }
 

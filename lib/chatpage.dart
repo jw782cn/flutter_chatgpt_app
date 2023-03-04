@@ -1,13 +1,12 @@
 import 'dart:convert';
 
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:http/http.dart' as http;
 import 'package:provider/provider.dart';
 
 import 'models.dart';
 import 'conversation_provider.dart';
-import 'secret.dart';
+import 'secrets.dart';
 
 class ChatPage extends StatefulWidget {
   const ChatPage({super.key});
@@ -41,10 +40,10 @@ class _ChatPageState extends State<ChatPage> {
 
   Future<Message?> _sendMessage(List<Map<String, String>> messages) async {
     final url = Uri.parse('https://api.openai.com/v1/chat/completions');
-
+    final apiKey = Provider.of<ConversationProvider>(context, listen: false).yourapikey;
     final headers = {
       'Content-Type': 'application/json',
-      'Authorization': 'Bearer $openaiApiKey',
+      'Authorization': 'Bearer $apiKey',
     };
 
     // send all current conversation to OpenAI
@@ -66,10 +65,9 @@ class _ChatPageState extends State<ChatPage> {
             senderId: systemSender.id, content: contentWithoutPrefix);
       }
     } else {
-      // print('Error: ${response.statusCode} ${response.body}');
-      return Message(
-          senderId: systemSender.id,
-          content: 'Error: ${response.statusCode} ${response.body}');
+      // invalid api key
+      // create a new dialog
+      return Message(content: "Invalid", senderId: systemSender.id);
     }
     return null;
   }
@@ -85,6 +83,7 @@ class _ChatPageState extends State<ChatPage> {
       curve: Curves.easeOut,
     );
   }
+
 
   void _sendMessageAndAddToChat() async {
     final text = _textController.text.trim();
@@ -109,7 +108,7 @@ class _ChatPageState extends State<ChatPage> {
               .addMessage(assistantMessage);
         });
       }
-      
+
       // scroll to last message
       _scrollToLastMessage();
     }
@@ -156,7 +155,7 @@ class _ChatPageState extends State<ChatPage> {
                                     vertical: 8.0, horizontal: 16.0),
                                 decoration: BoxDecoration(
                                   color: message.senderId == userSender.id
-                                      ?  Color(0xff55bb8e)
+                                      ? Color(0xff55bb8e)
                                       : Colors.grey[200],
                                   borderRadius: BorderRadius.circular(16.0),
                                   boxShadow: [
@@ -217,7 +216,18 @@ class _ChatPageState extends State<ChatPage> {
                 ),
                 IconButton(
                   icon: const Icon(Icons.send),
-                  onPressed: _sendMessageAndAddToChat,
+                  onPressed: 
+                  // listen to apikey to see if changed
+                  Provider.of<ConversationProvider>(context, listen: true)
+                          .yourapikey == "YOUR_API_KEY"
+                      ? () {
+                        showRenameDialog(context);
+                      }
+                      : () {
+                          _sendMessageAndAddToChat();
+                        },
+
+                  
                 ),
               ],
             ),

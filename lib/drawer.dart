@@ -3,6 +3,7 @@ import 'package:provider/provider.dart';
 
 import 'conversation_provider.dart';
 import 'models.dart';
+import 'secrets.dart';
 
 class MyDrawer extends StatelessWidget {
   @override
@@ -115,7 +116,7 @@ class MyDrawer extends StatelessWidget {
               padding: const EdgeInsets.symmetric(vertical: 16.0),
               child: GestureDetector(
                 onTap: () {
-                  // TODO: Implement settings action
+                  showRenameDialog(context);
                 },
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.center,
@@ -139,4 +140,5 @@ class MyDrawer extends StatelessWidget {
       ),
     );
   }
+  
 }
