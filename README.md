@@ -2,9 +2,11 @@
 
 Created by Chenran(cn257@cornell.edu)
 
-This is a simple version of chatgpt in flutter, using your own API key. With this app, you can chat in app with chatgpt. I never learned flutter before, but with ChatGPT, I created this simple version in 2 days! You can build this too!
+This is a simple version of **chatgpt in flutter**, using your own API key. With this app, you can chat in app with chatgpt. I never learned flutter before, but with ChatGPT, I created this simple version in 2 days! You can build this too!
 
-There may be some bugs though, bare with me.
+I implemented this for fun and improving my code skills, also other flutter beginners can start with my projects to build their ideas. There may be some bugs though, bare with me. But the data structure classes are delicatedly written! I've learned a lot during this simple development, the biggest lesson is:
+
+**Think before you code!**
 
 
 |  |  |  |
@@ -41,5 +43,22 @@ The app includes the following features:
 The OpenAI API for providing the language model used in the app.
 The Flutter framework for making it easy to build beautiful and fast mobile apps.
 
+
+## TODO 
+ 
+ *I may not continue do this, if you want to work on this project further, please keep in mind these bugs (updated 3/4/2023)*
+
+[ ] fix scroll down gestures to hide input keyboard
+
+[ ] when click send, messages can be pushed
+
+[ ] change UI settings (now it looks like andriod)
+
+[ ] fix typing box height (now it's fixed size, and the line will stretch vertically)
+
+[ ] other features than chatting... use your creative mind
+
+[ ] deploy to app store
+
 ## License
-You can use this project for your own further development! Happy Chatting!
+You can use this project for your own further development! Happy developing and chatting!
