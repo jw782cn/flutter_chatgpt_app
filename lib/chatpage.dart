@@ -20,12 +20,7 @@ class _ChatPageState extends State<ChatPage> {
   final TextEditingController _textController = TextEditingController();
   final ScrollController _scrollController = ScrollController();
   final http.Client _client = http.Client();
-  final String _model = "gpt-3.5-turbo";
-
-  final Sender systemSender = Sender(
-      name: 'System', avatarAssetPath: 'resources/avatars/ChatGPT_logo.png');
-  final Sender userSender =
-      Sender(name: 'User', avatarAssetPath: 'resources/avatars/person.png');
+  FocusNode _focusNode = FocusNode();
 
   @override
   void dispose() {
@@ -48,7 +43,7 @@ class _ChatPageState extends State<ChatPage> {
 
     // send all current conversation to OpenAI
     final body = {
-      'model': _model,
+      'model': model,
       'messages': messages,
     };
     final response =
@@ -96,7 +91,7 @@ class _ChatPageState extends State<ChatPage> {
             .addMessage(userMessage);
       });
 
-      // scroll to last message
+      // TODO:scroll to last message
       _scrollToLastMessage();
 
       final assistantMessage = await _sendMessage(
@@ -109,7 +104,7 @@ class _ChatPageState extends State<ChatPage> {
         });
       }
 
-      // scroll to last message
+      // TODO:scroll to last message
       _scrollToLastMessage();
     }
   }
@@ -118,7 +113,12 @@ class _ChatPageState extends State<ChatPage> {
   Widget build(
     BuildContext context,
   ) {
-    return Scaffold(
+    return 
+    GestureDetector(
+      onTap: () => FocusScope.of(context).unfocus(),
+      onVerticalDragDown: (_) => FocusScope.of(context).unfocus(),
+      child: Scaffold(
+      // resizeToAvoidBottomInset: true,
       body: Column(
         children: [
           Expanded(
@@ -204,7 +204,7 @@ class _ChatPageState extends State<ChatPage> {
             margin:
                 const EdgeInsets.symmetric(vertical: 16.0, horizontal: 16.0),
             padding:
-                const EdgeInsets.symmetric(vertical: 8.0, horizontal: 16.0),
+                const EdgeInsets.symmetric(vertical: 16.0, horizontal: 16.0),
             child: Row(
               children: [
                 Expanded(
@@ -234,6 +234,9 @@ class _ChatPageState extends State<ChatPage> {
           ),
         ],
       ),
+    ),
     );
+    
+    
   }
 }

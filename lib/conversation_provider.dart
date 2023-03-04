@@ -14,14 +14,22 @@ class ConversationProvider extends ChangeNotifier {
   int get currentConversationLength =>
       _conversations[_currentConversationIndex].messages.length;
   String get yourapikey => apikey;
-  Conversation get currentConversation => _conversations[_currentConversationIndex];
+  Conversation get currentConversation =>
+      _conversations[_currentConversationIndex];
   // get current conversation's messages format
   //'messages': [
-      //   {'role': 'user', 'content': text},
-      // ],
+  //   {'role': 'user', 'content': text},
+  // ],
   List<Map<String, String>> get currentConversationMessages {
-    List<Map<String, String>> messages = [{ 'role': "system", 'content': "You are ChatGPT, a large language model trained by OpenAI. Answer as concisely as possible."}];
-    for (Message message in _conversations[_currentConversationIndex].messages) {
+    List<Map<String, String>> messages = [
+      {
+        'role': "system",
+        'content':
+            "You are ChatGPT, a large language model trained by OpenAI. Answer as concisely as possible."
+      }
+    ];
+    for (Message message
+        in _conversations[_currentConversationIndex].messages) {
       messages.add({
         'role': message.senderId == 'User' ? 'user' : 'system',
         'content': message.content
@@ -29,7 +37,6 @@ class ConversationProvider extends ChangeNotifier {
     }
     return messages;
   }
-
 
   // initialize provider conversation list
   ConversationProvider() {
@@ -41,7 +48,7 @@ class ConversationProvider extends ChangeNotifier {
     _conversations = value;
     notifyListeners();
   }
-  
+
   // change current conversation
   set currentConversationIndex(int value) {
     _currentConversationIndex = value;
@@ -59,7 +66,7 @@ class ConversationProvider extends ChangeNotifier {
     _conversations[_currentConversationIndex].messages.add(message);
     notifyListeners();
   }
-  
+
   // add a new empty conversation
   // default title is 'new conversation ${_conversations.length}'
   void addEmptyConversation(String title) {
@@ -97,7 +104,7 @@ class ConversationProvider extends ChangeNotifier {
 
   //rename conversation
   void renameConversation(String title) {
-    if (title == ""){
+    if (title == "") {
       // no title, use default title
       title = 'new conversation ${_currentConversationIndex}';
     }
@@ -117,5 +124,11 @@ class ConversationProvider extends ChangeNotifier {
     _conversations[_currentConversationIndex].messages.clear();
     notifyListeners();
   }
-
 }
+
+const String model = "gpt-3.5-turbo";
+
+final Sender systemSender = Sender(
+    name: 'System', avatarAssetPath: 'resources/avatars/ChatGPT_logo.png');
+final Sender userSender =
+    Sender(name: 'User', avatarAssetPath: 'resources/avatars/person.png');
