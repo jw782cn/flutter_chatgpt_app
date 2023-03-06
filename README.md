@@ -58,6 +58,8 @@ The Flutter framework for making it easy to build beautiful and fast mobile apps
 
 [ ] other features than chatting... use your creative mind
 
+[ ] fix Chinese character errors
+
 [ ] deploy to app store
 
 ## License
