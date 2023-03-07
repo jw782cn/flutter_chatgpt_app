@@ -2,6 +2,12 @@
 
 Created by Chenran(cn257@cornell.edu)
 
+Modified by Sherry0429,
+  changed:
+        1. fix utf8 problems.
+        2. gradle properties add proxy settings
+        3. http request support system proxies or custom proxies.
+
 This is a simple version of **chatgpt in flutter**, using your own API key. With this app, you can chat in app with chatgpt. I never learned flutter before, but with ChatGPT, I created this simple version in 2 days! You can build this too!
 
 I implemented this for fun and improving my code skills, also other flutter beginners can start with my projects to build their ideas. There may be some bugs though, bare with me. But the data structure classes are delicatedly written! I've learned a lot during this simple development, the biggest lesson is:
@@ -58,9 +64,9 @@ The Flutter framework for making it easy to build beautiful and fast mobile apps
 
 [ ] other features than chatting... use your creative mind
 
-[ ] fix Chinese character errors
+[√] fix Chinese character errors
 
 [ ] deploy to app store
 
 ## License
-You can use this project for your own further development! Happy developing and chatting!
+MIT License
