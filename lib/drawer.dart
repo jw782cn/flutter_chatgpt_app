@@ -135,6 +135,29 @@ class MyDrawer extends StatelessWidget {
                 ),
               ),
             ),
+            Container(
+              padding: const EdgeInsets.symmetric(vertical: 14.0),
+              child: GestureDetector(
+                onTap: () {
+                  showProxyDialog(context);
+                },
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Icon(Icons.settings, color: Colors.grey[700], size: 20.0),
+                    const SizedBox(width: 15.0),
+                    Text(
+                      'Proxy Setting',
+                      style: TextStyle(
+                        fontFamily: 'din-regular',
+                        color: Colors.grey[700],
+                        fontSize: 18.0,
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+            ),
           ],
         ),
       ),

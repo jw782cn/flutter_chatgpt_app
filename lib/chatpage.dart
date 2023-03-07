@@ -1,9 +1,10 @@
 import 'dart:convert';
+import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'package:provider/provider.dart';
-
+import 'dart:convert';
 import 'models.dart';
 import 'conversation_provider.dart';
 import 'secrets.dart';
@@ -19,7 +20,7 @@ class ChatPage extends StatefulWidget {
 class _ChatPageState extends State<ChatPage> {
   final TextEditingController _textController = TextEditingController();
   final ScrollController _scrollController = ScrollController();
-  final http.Client _client = http.Client();
+  HttpClient _client = HttpClient();
   FocusNode _focusNode = FocusNode();
 
   @override
@@ -36,35 +37,53 @@ class _ChatPageState extends State<ChatPage> {
   Future<Message?> _sendMessage(List<Map<String, String>> messages) async {
     final url = Uri.parse('https://api.openai.com/v1/chat/completions');
     final apiKey = Provider.of<ConversationProvider>(context, listen: false).yourapikey;
-    final headers = {
-      'Content-Type': 'application/json',
-      'Authorization': 'Bearer $apiKey',
-    };
+    final proxy = Provider.of<ConversationProvider>(context, listen: false).yourproxy;
+    final converter = JsonUtf8Encoder();
 
     // send all current conversation to OpenAI
     final body = {
       'model': model,
       'messages': messages,
     };
-    final response =
-        await _client.post(url, headers: headers, body: json.encode(body));
-    if (response.statusCode == 200) {
-      final data = json.decode(response.body);
-      final completions = data['choices'] as List<dynamic>;
-      if (completions.isNotEmpty) {
-        final completion = completions[0];
-        final content = completion['message']['content'] as String;
-        // delete all the prefix '\n' in content
-        final contentWithoutPrefix = content.replaceFirst(RegExp(r'^\n+'), '');
-        return Message(
-            senderId: systemSender.id, content: contentWithoutPrefix);
-      }
-    } else {
-      // invalid api key
-      // create a new dialog
-      return Message(content: "Invalid", senderId: systemSender.id);
+    // _client.findProxy = HttpClient.findProxyFromEnvironment;
+    _client.findProxy = (url) {
+      return HttpClient.findProxyFromEnvironment(
+          url, environment: {
+            "http_proxy": proxy,
+            "https_proxy": proxy
+          });
+    };
+    try {
+      return await _client.postUrl(url).then(
+              (HttpClientRequest request) {
+            request.headers.set('Content-Type', 'application/json');
+            request.headers.set('Authorization', 'Bearer $apiKey');
+            request.add(converter.convert(body));
+            return request.close();
+          }
+      ).then((HttpClientResponse response) async {
+        var retBody = await response.transform(utf8.decoder).join();
+        if (response.statusCode == 200) {
+          final data = json.decode(retBody);
+          final completions = data['choices'] as List<dynamic>;
+          if (completions.isNotEmpty) {
+            final completion = completions[0];
+            final content = completion['message']['content'] as String;
+            // delete all the prefix '\n' in content
+            final contentWithoutPrefix = content.replaceFirst(
+                RegExp(r'^\n+'), '');
+            return Message(
+                senderId: systemSender.id, content: contentWithoutPrefix);
+          }
+        } else {
+          // invalid api key
+          // create a new dialog
+          return Message(content: "API KEY is Invalid", senderId: systemSender.id);
+        }
+      });
+    } on Exception catch (_) {
+      return Message(content: _.toString(), senderId: systemSender.id);
     }
-    return null;
   }
 
   //scroll to last message
