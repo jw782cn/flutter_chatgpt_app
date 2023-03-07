@@ -66,7 +66,6 @@ The Flutter framework for making it easy to build beautiful and fast mobile apps
 
 [√] fix Chinese character errors 
 
-[ ] deploy to app store
 
 ## License
 MIT License
