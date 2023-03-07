@@ -46,13 +46,16 @@ class _ChatPageState extends State<ChatPage> {
       'messages': messages,
     };
     // _client.findProxy = HttpClient.findProxyFromEnvironment;
-    _client.findProxy = (url) {
-      return HttpClient.findProxyFromEnvironment(
-          url, environment: {
-            "http_proxy": proxy,
-            "https_proxy": proxy
-          });
-    };
+    if (proxy != "") {
+      _client.findProxy = (url) {
+        return HttpClient.findProxyFromEnvironment(
+            url, environment: {
+          "http_proxy": proxy,
+          "https_proxy": proxy
+        });
+      };
+    }
+
     try {
       return await _client.postUrl(url).then(
               (HttpClientRequest request) {

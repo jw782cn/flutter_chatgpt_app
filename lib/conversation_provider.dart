@@ -6,7 +6,7 @@ class ConversationProvider extends ChangeNotifier {
   List<Conversation> _conversations = [];
   int _currentConversationIndex = 0;
   String apikey = "YOUR_API_KEY";
-  String proxy = "http://127.0.0.1:33210";
+  String proxy = "";
   List<Conversation> get conversations => _conversations;
   int get currentConversationIndex => _currentConversationIndex;
   String get currentConversationTitle =>
